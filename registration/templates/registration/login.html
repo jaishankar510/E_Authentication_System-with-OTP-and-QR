@@ -1,0 +1,44 @@
+{% extends 'base.html' %}
+{% block head %}
+    <title>Login</title>
+    {% load staticfiles %}
+    <link rel="stylesheet" type="text/css" href="{% static 'registration/login.css' %}">
+{%endblock%}
+{% block body%}
+
+
+{% if form.errors %}
+    <p>Your username and password didn't match. Please try again.</p>
+{% endif %}
+
+{% if next %}
+    {% if user.is_authenticated %}
+    <p>Your account doesn't have access to this page. To proceed,
+    please login with an account that has access.</p>
+    {% else %}
+    <p>Please login to see this page.</p>
+    {% endif %}
+{% endif %}
+    <div class="form">
+                    <h2>Please login here</h2>
+       <form class="login.form" method="POST" id="LoginForm">
+            {% csrf_token %}
+            Enter username: <input type="text" name="username">
+            Enter password: <input type="password" name="password">
+            <button type="submit" name="LoginBtn1">Login with OTP</button>
+            <!--button type="" name="LoginBtn2">Login with QR</button-->
+        </form>
+    </div>
+
+<script>
+    document.getElementById('LoginForm').onkeypress = function(e)
+    {
+        var key = e.charCode || e.keyCode || 0;
+        if(key == 13)
+        {
+            e.preventDefault();
+        }
+    }
+</script>
+
+{% endblock %}
